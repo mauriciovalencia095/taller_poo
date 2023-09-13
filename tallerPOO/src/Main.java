@@ -4,28 +4,36 @@ import facturas.FacturaSimplificada;
 import utils.Productos;
 import utils.ProductosEnum;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Main {
 
     public static void main(String[] args) {
+
+        Map<String, Double> productos = new HashMap<>();
+
 
         ProductosEnum JEAN = ProductosEnum.JEAN;
         ProductosEnum CAMISA = ProductosEnum.CAMISA;
         ProductosEnum RELOJ = ProductosEnum.RELOJ;
 
-        String [] comprasError= {JEAN.getProducto(),CAMISA.getProducto(),CAMISA.getProducto(),CAMISA.getProducto(),CAMISA.getProducto()};
-        String [] comprasComboCompleto= {JEAN.getProducto(),CAMISA.getProducto(), RELOJ.getProducto()};
-        double [] comboCompleto= {JEAN.precio(),CAMISA.precio(), RELOJ.precio()};
+        productos.put(JEAN.getProducto(), JEAN.precio());
+        productos.put(CAMISA.getProducto(), CAMISA.precio());
+        productos.put(RELOJ.getProducto(), RELOJ.precio());
+
 
         FacturaElectronica facturaElectronica1 = new FacturaElectronica();
         FacturaOrdinaria facturaOrdinaria = new FacturaOrdinaria();
         FacturaSimplificada facturaSimplificada = new FacturaSimplificada();
 
-        facturaElectronica1.calcularValor( comboCompleto,comprasError);
-        facturaOrdinaria.calcularValor( comboCompleto,comprasError);
-        facturaSimplificada.calcularValor( comboCompleto,comprasError);
 
-
-
+        System.out.println("ORDINARIA\n");
+        facturaOrdinaria.calcularValor(productos);
+        System.out.println("SIMPLIFICADA\n");
+        facturaSimplificada.calcularValor(productos);
+        System.out.println("ELECTRONICA\n");
+        facturaElectronica1.calcularValor(productos);
 
 
     }
